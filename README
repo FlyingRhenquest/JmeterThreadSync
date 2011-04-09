@@ -1,0 +1,47 @@
+This project is designed to allow us to pause threads in Jmeter for
+a period of time, with the idea that some number of threads should
+be allowed to catch up with other threads so that they all move forward
+at the same time.
+
+This jar file provides you a new Config Element under the "Config Elements"
+menu in jmeter and a new sampler under "Samplers."
+
+The Config element allows you to specify a name and a starting value.
+A jmeter variable will be created with the name you specify and a
+reference to a CheckpointObject will be stored in that name.
+
+The sampler will call the CheckpointObject's "decrement" method,
+which will decrement the current value of the checkpoint object and
+then check to see if it's zero. If it is not zero, the thread will
+go to sleep until it becomes zero, which must happen in a different
+thread.
+
+If it is zero, it will wake up all currently sleeping threads and
+reset the checkpoint's value to its start value. That is why in the
+example, all debug samplers show the checkpoint value as 3.
+
+Since it binds to jmeter variables, you should be able to have more
+than one checkpoint config element and checkpoints. I haven't tested
+this extensively (IE: at all) yet.
+
+Threading stuff can be quite complex, so you might need to mess around
+with values to get things just right.
+
+I've poked at jmeter variables a bit and it appears that separate
+copies are created for each thread. At some point it would be nice
+(and dangerous) to be able to create some thread global ones so
+we could communicate without having to write to a file. It wouldn't be
+terribly difficult to base one off of the objects in this plugin, if
+someone wants to do that before I get around to it. Please let me
+know if you do, might save me a couple hours work later on.
+
+Installation:
+
+Drop the jar file in your jmeter lib/ext directory.
+
+Building:
+
+I use maven to build it, and my pom.xml makes some assumptions about where
+stuff lives. If you want to build it yourself, you'll have to change your
+pom.xml a bit. So change the directories pointing at your jmeter install
+directory and then go "mvn package". That oughta do it. 
