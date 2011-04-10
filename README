@@ -27,13 +27,9 @@ this extensively (IE: at all) yet.
 Threading stuff can be quite complex, so you might need to mess around
 with values to get things just right.
 
-I've poked at jmeter variables a bit and it appears that separate
-copies are created for each thread. At some point it would be nice
-(and dangerous) to be able to create some thread global ones so
-we could communicate without having to write to a file. It wouldn't be
-terribly difficult to base one off of the objects in this plugin, if
-someone wants to do that before I get around to it. Please let me
-know if you do, might save me a couple hours work later on.
+If you want to communicate between threads, check out my JmeterThreadGlobal
+project at https://github.com/FlyingRhenquest/JmeterThreadGlobal. Seems
+like a great way to probably shoot yourself in the foot!
 
 Installation:
 
